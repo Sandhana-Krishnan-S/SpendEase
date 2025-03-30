@@ -1,0 +1,51 @@
+const { Schema, default: mongoose } = require("mongoose");
+const { database } = require("../connectDB");
+const bcrypt = require('bcrypt');
+
+const spendEase = database.spendEase;
+
+if(!spendEase) {
+    throw new Error("Unable to connect to DB : spendEase");
+}
+
+const userSchema = new mongoose.Schema({
+    userName : {
+        type : String,
+        required : true
+    }, 
+    email : {
+        type : String,
+        lowercase : true,
+        required : true,
+        unique : true
+    },
+    password : {
+        type : String,
+        required : true
+    } 
+});
+
+userSchema.pre('save' , async function() {
+    try {
+        var user = this;
+        const salt = await(bcrypt.genSalt(10));
+        const hashpass = await bcrypt.hash(user.password , salt);
+
+        user.password = hashpass;
+    } catch (error) {
+        throw error;
+    }
+})
+
+userSchema.methods.compare = async function (userPass) {
+    try {
+        const isMatch = await bcrypt.compare(userPass , this.password);
+        return isMatch;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const userModel = spendEase.model('clientUser' , userSchema);
+
+module.exports = userModel;
