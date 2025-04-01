@@ -1,12 +1,6 @@
-const { Schema, default: mongoose } = require("mongoose");
-const { database } = require("../connectDB");
+const { default: mongoose } = require("mongoose");
 const bcrypt = require('bcrypt');
 
-const spendEase = database.spendEase;
-
-if(!spendEase) {
-    throw new Error("Unable to connect to DB : spendEase");
-}
 
 const userSchema = new mongoose.Schema({
     userName : {
@@ -46,6 +40,6 @@ userSchema.methods.compare = async function (userPass) {
     }
 }
 
-const userModel = spendEase.model('clientUser' , userSchema);
+const userModel = mongoose.model('users' , userSchema);
 
 module.exports = userModel;

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('./errorHandler');
 const { connectDB } = require('./connectDB');
 const mainRouter = require('./routers');
+const { default: mongoose } = require('mongoose');
 
 const app = express();
 

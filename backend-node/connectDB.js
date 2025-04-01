@@ -1,18 +1,15 @@
 const { default: mongoose } = require("mongoose")
 
-const database = {};
-
 const connectDB = () => {
     try {
-        const spendEaseUrl = (process.env.MONGODB_URL ?? "mongodb://localhost:27017/") + (process.env.MAIN_DB ?? "spend-ease"); 
-        const spendEase = mongoose.createConnection(spendEaseUrl);
-        spendEase.on('open' , () => {
-            console.log("Connected to the DB successfully");
-        });
-        spendEase.on('error' , (err) => {
-            throw new Error(err)
-        })
-        database['spendEase'] = spendEase;
+        const spendEaseUrl = (process.env.MONGODB_URL ?? "mongodb://localhost:27017/") + (process.env.MAIN_DB ?? "spend-ease");
+        mongoose.connect(spendEaseUrl).then(() => {
+            console.log("Connected to MongoDB");
+          })
+          .catch((error) => {
+            console.error("Error connecting to MongoDB:", error);
+            throw error;
+          });
     } catch (error) {
         console.log(error.message);
         process.exit(1);
@@ -22,5 +19,4 @@ const connectDB = () => {
 
 module.exports = {
     connectDB,
-    database
 };
