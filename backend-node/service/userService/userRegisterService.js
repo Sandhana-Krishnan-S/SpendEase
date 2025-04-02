@@ -1,3 +1,4 @@
+const { userNameValidate, emailValidate, passwordValidate } = require("../../helper/userValidation");
 const userModel = require("../../model/userModel");
 
 const register = async (userName , email , password) => {
@@ -28,32 +29,18 @@ const register = async (userName , email , password) => {
 } 
 
 const userValidate = (userName , email , password) => {
-    userName = userName.trim();
-    email = email.trim();
-    if(userName.length < 3 || userName.length > 15) {
-        return {
-            status : false,
-            data : null,
-            err : "Username must have 3 to 15 characters"
-        };
+    const userValid = userNameValidate(userName);
+    if(!userValid.status) {
+        return userValid;
     }
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if(!emailRegex.test(email)) {
-        return {
-            status : false,
-            data : null,
-            err : "Invalid Email Id"
-        };
+    const emailValid = emailValidate(email);
+    if(!emailValid.status) {
+        return emailValid;
     }
-    const passwordRegex = /^.{8,15}$/;
-    if(!passwordRegex.test(password)) {
-        return {
-            status : false,
-            data : null,
-            err : "Password must contain 8 to 15 characters"
-        };
+    const passwordValid = passwordValidate(password);
+    if(!passwordValid.status) {
+        return passwordValid;
     }
-
     return {
         status : true,
         data : {userName , email , password},
