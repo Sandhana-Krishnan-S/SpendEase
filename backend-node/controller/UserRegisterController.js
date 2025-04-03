@@ -1,3 +1,4 @@
+const { generateNewJWT } = require("../middlewares/tokenAuth");
 const registerService = require("../service/userService/userRegisterService");
 
 const register = async (req , res  , next) => {
@@ -5,7 +6,19 @@ const register = async (req , res  , next) => {
         const { userName , email , password } = req.body;
         const response  = await registerService(userName , email , password);
         if(response.status) {
-            res.status(201).json(response);
+            const tokens = await generateNewJWT(response.data._id , response.data.email);
+            res.status(200).json({
+                status : true,
+                data : {
+                    user: {
+                        id: response.data._id,
+                        email: response.data.email,
+                        name: response.data.userName
+                    },
+                    tokens
+                },
+                error : null
+            });
         } else {
             res.status(400).json(response);
         }

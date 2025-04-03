@@ -12,7 +12,7 @@ const login = async (email , password) => {
             return {
                 status : false,
                 data : null,
-                err : "User not found"
+                error : "User not found"
             };
         }
         const comparePassword = await user.compare(password);
@@ -20,13 +20,13 @@ const login = async (email , password) => {
             return {
                 status : false,
                 data : null,
-                err : "Invalid credentials"
+                error : "Invalid credentials"
             };
         }
         return {
             status : true,
             data : user,
-            err : null
+            error : null
         };
     } catch (error) {
         throw error;
@@ -41,7 +41,7 @@ const userValidate = (email) => {
     return {
         status : true,
         data : email,
-        err : null
+        error : null
     };
 }
 

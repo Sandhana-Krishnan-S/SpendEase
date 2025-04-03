@@ -4,13 +4,13 @@ const userNameValidate = (userName) => {
         return {
             status : false,
             data : null,
-            err : "Username must have 3 to 15 characters"
+            error : "Username must have 3 to 15 characters"
         };
     }
     return {
         status : true,
         data : userName,
-        err : null
+        error : null
     }
 }
 
@@ -21,13 +21,13 @@ const emailValidate = (email) => {
         return {
             status : false,
             data : null,
-            err : "Invalid Email Id"
+            error : "Invalid Email Id"
         };
     }
     return {
         status : true,
         data : email,
-        err : null
+        error : null
     }
 }
 
@@ -37,14 +37,14 @@ const passwordValidate = (password) => {
         return {
             status : false,
             data : null,
-            err : "Password must contain 8 to 15 characters"
+            error : "Password must contain 8 to 15 characters"
         };
     }
     
     return {
         status : true,
         data : password,
-        err : null
+        error : null
     }
 }
 

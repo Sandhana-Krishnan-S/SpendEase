@@ -6,8 +6,8 @@
     - if it works for me then I will post it publically
 
 ## Todo list:
-    - add JWT tokens for loggin and signup
+    - Setup a redis for refresh token storage and revoke 
     - set login limit for users bruting the accounts
-    - Build a middleware which checks for bearer authToken
+    - start working on actual logic of app now that login and register works
 
     

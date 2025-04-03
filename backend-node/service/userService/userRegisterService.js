@@ -8,7 +8,7 @@ const register = async (userName , email , password) => {
             return {
                 status : false,
                 data : null,
-                err : "User is alredy registered"
+                error : "User is alredy registered"
             }
         }
         const isValid = userValidate(userName , email , password);
@@ -44,7 +44,7 @@ const userValidate = (userName , email , password) => {
     return {
         status : true,
         data : {userName , email , password},
-        err : null
+        error : null
     }
 } 
 

@@ -1,10 +1,9 @@
 const express = require('express');
 require('dotenv').config()
 const bodyParser = require('body-parser');
-const errorHandler = require('./errorHandler');
 const { connectDB } = require('./connectDB');
 const mainRouter = require('./routers');
-const { default: mongoose } = require('mongoose');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
@@ -26,7 +25,7 @@ app.use('*' , (req , res) => {
     res.status(404).send({
         status : false,
         data : null,
-        err : "Invalid Url"
+        error : "Invalid Url"
     });
 });
 
