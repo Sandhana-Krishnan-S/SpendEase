@@ -1,8 +1,10 @@
 const { userNameValidate, emailValidate, passwordValidate } = require("../../helper/userValidation");
 const userModel = require("../../model/userModel");
+const sendMailAuth = require("./mailAuthSender");
 
 const register = async (userName , email , password) => {
     try {
+        const isVerified = false;
         const existingUser = await userModel.findOne({email});
         if(existingUser) {
             return {
@@ -18,10 +20,12 @@ const register = async (userName , email , password) => {
         const newUser = new userModel({
             userName,
             email,
-            password
+            password,
+            isVerified
         });
         const savedUser = await newUser.save();
         isValid.data = savedUser;
+        sendMailAuth(userName , email);
         return isValid;
     } catch (error) {
         throw error;

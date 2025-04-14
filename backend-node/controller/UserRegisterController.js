@@ -1,3 +1,4 @@
+const sendMailAuth = require("../middlewares/authMailer");
 const { generateNewJWT } = require("../middlewares/tokenAuth");
 const registerService = require("../service/userService/userRegisterService");
 

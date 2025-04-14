@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../model/userModel");
-const { accessTokenGenerator, refreshTokenGenerator } = require("../helper/JWTgenerator");
+const { accessTokenGenerator, refreshTokenGenerator, mailAuthGenerator } = require("../helper/JWTgenerator");
 
 
 const verifyAccess = async (req , res , next) => {
@@ -62,6 +62,28 @@ const verifyRefresh = async (token) => {
 }
 
 
+const verifyMailAuth = async (token) => {
+    try {
+        const decode = jwt.verify(token , process.env.JWT_MAILAUTH_SECRET);
+        const user = await userModel.findByEmail(decode.email);
+        if (!user) {
+            return {
+                status: false,
+                data : null,
+                error: "User not found. Token is invalid."
+            };
+        }
+        return {
+            status : true,
+            data : user,
+            error : null
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 const generateNewJWT = async (id , email) => {
     try {   
         const accessToken = await accessTokenGenerator(id , email);
@@ -72,8 +94,19 @@ const generateNewJWT = async (id , email) => {
     }
 }
 
+const mailAuthToken = async (name , email) => {
+    try {   
+        const token = await mailAuthGenerator(name , email);
+        return token
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     verifyAccess,
     verifyRefresh,
-    generateNewJWT
+    generateNewJWT,
+    mailAuthToken,
+    verifyMailAuth
 };

@@ -27,7 +27,23 @@ const refreshTokenGenerator = async (id , email) => {
     }
 }
 
+const mailAuthGenerator = async (id , email) => {
+    try {
+        const token = jwt.sign({
+            id,
+            email
+            // 10 mins
+        } , process.env.JWT_MAILAUTH_SECRET , {algorithm : "HS512" , expiresIn: '10m'});
+
+        return token;
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 module.exports = {
     accessTokenGenerator,
-    refreshTokenGenerator
+    refreshTokenGenerator,
+    mailAuthGenerator
 }

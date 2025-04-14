@@ -16,7 +16,11 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true
-    } 
+    },
+    isVerified : {
+        type : Boolean,
+        required : true
+    }
 });
 
 userSchema.pre('save' , async function() {
@@ -38,6 +42,10 @@ userSchema.methods.compare = async function (userPass) {
     } catch (error) {
         throw error;
     }
+}
+
+userSchema.statics.findByEmail = function(email) {
+    return this.findOne({ email });
 }
 
 const userModel = mongoose.model('users' , userSchema);
