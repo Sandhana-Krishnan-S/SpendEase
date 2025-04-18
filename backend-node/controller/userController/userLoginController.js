@@ -1,6 +1,5 @@
-const { accessTokenGenerator, refreshTokenGenerator } = require("../helper/JWTgenerator");
-const { generateNewJWT } = require("../middlewares/tokenAuth");
-const loginService = require("../service/userService/userLoginService");
+const { generateNewJWT } = require("../../middlewares/tokenAuth");
+const loginService = require("../../service/userService/userLoginService");
 
 const login = async (req , res , next) => {
     try {

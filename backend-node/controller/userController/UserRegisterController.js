@@ -1,6 +1,5 @@
-const sendMailAuth = require("../middlewares/authMailer");
-const { generateNewJWT } = require("../middlewares/tokenAuth");
-const registerService = require("../service/userService/userRegisterService");
+const { generateNewJWT } = require("../../middlewares/tokenAuth");
+const registerService = require("../../service/userService/userRegisterService");
 
 const register = async (req , res  , next) => {
     try {

@@ -1,4 +1,4 @@
-const jwtRefreshService = require("../service/userService/jwtRefreshService");
+const jwtRefreshService = require("../../service/userService/jwtRefreshService");
 
 const jwtRefresh = async (req , res , next) => {
     try {

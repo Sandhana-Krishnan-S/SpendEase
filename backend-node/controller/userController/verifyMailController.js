@@ -1,4 +1,4 @@
-const verifyMailService = require("../service/userService/verifyMailService");
+const verifyMailService = require("../../service/userService/verifyMailService");
 
 
 const verifyMail = async (req , res , next) => {

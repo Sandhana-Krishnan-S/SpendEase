@@ -42,13 +42,12 @@ const generateConfirmationEmail = (username , usermail , confirmationLink) => {
 
 const sendMailAuth = async (username , usermail) => {
     const token = await mailAuthToken(username , usermail);
-    const confirmationLink = `http://localhost:8080/api/auth/confirm-mail?token=${token}`
+    const confirmationLink = `${process.env.BASE_URL}/api/auth/confirm-mail?token=${token}`;
     const data = generateConfirmationEmail(username , usermail , confirmationLink);
     sender.sendMail(data , (error , info) => {
         if(error) {
             throw error;
         }
-        console.log(info);
     });
 }
 

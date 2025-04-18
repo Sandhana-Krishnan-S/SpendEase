@@ -6,6 +6,7 @@ const { accessTokenGenerator, refreshTokenGenerator, mailAuthGenerator } = requi
 const verifyAccess = async (req , res , next) => {
     try {
         const token = req.headers.authorization;
+        console.log(token)
         if(!token || !token.startsWith("Bearer ")) {
             return next({
                 status: 401,

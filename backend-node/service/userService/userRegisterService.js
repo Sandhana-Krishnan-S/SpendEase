@@ -49,7 +49,7 @@ const userValidate = (userName , email , password) => {
         status : true,
         data : {userName , email , password},
         error : null
-    }
+    };
 } 
 
 module.exports = register;

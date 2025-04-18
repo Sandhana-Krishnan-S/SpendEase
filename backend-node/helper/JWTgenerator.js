@@ -5,7 +5,7 @@ const accessTokenGenerator = async (id , email) => {
         const token = jwt.sign({
             id,
             email
-        } , process.env.JWT_ACCESS_SECRET , {algorithm : "HS512" , expiresIn: "30s"});
+        } , process.env.JWT_ACCESS_SECRET , {algorithm : "HS512" , expiresIn: "30m"});
 
         return token;
     } catch (error) {
