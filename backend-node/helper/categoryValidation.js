@@ -17,7 +17,6 @@ const categoryNameValidate = (categoryName) => {
 
 const categoryEmojiValidate = (categoryEmoji) => {
     const matches = categoryEmoji.match(emojiRegex);
-    console.log(matches.length !== 1)
     if(!matches || matches.length !== 1 || matches[0] !== categoryEmoji) {
         return {
             status : false,
@@ -25,7 +24,6 @@ const categoryEmojiValidate = (categoryEmoji) => {
             error : 'Category emoji is invalid'
         };
     }
-    console.log('test')
     return {
         status : true,
         data : categoryEmoji,
