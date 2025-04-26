@@ -1,6 +1,6 @@
-const addCategoryService = require("../../service/categoryService/addCategoryService");
+const getCategoryService = require("../../service/categoryService/getCategoryService");
 
-const addCategoryController = async (req , res , next) => {
+const getCategoryController = async (req , res , next) => {
     try {
         const user = req.user;
         if(!user) {
@@ -12,17 +12,16 @@ const addCategoryController = async (req , res , next) => {
             return;
         }
         const userId = user._id;
-        const { categoryName, categoryEmoji } = req.body;
-        const response = await addCategoryService(userId, categoryName, categoryEmoji);
+        const response = await getCategoryService(userId);
         if(!response.status) {
             res.status(400).json(response);
             return;
         }
-        res.status(201).json(response);
+        res.status(200).json(response);
         return;
     } catch (error) {
         next(error);
     }
 }
 
-module.exports = addCategoryController;
+module.exports = getCategoryController;

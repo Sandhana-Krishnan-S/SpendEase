@@ -1,11 +1,15 @@
+const { categoryNameValidate, categoryEmojiValidate } = require("../../helper/categoryValidation");
 const categoryModel = require("../../model/categoryModel");
-const emojiRegex = require('emoji-regex')();
 
 const addCategoryService = async (userId, categoryName, categoryEmoji) => {
     try {
-        const isSafe = validateCategory(categoryName, categoryEmoji);
+        const isSafe = validateCategory(categoryName, categoryEmoji, userId);
         if(!isSafe.status) {
             return isSafe;
+        }
+        const isExist = await checkIfExists(categoryName, categoryEmoji, userId);
+        if(!isExist.status) {
+            return isExist;
         }
         const newCategory = new categoryModel({
             categoryName,
@@ -14,28 +18,53 @@ const addCategoryService = async (userId, categoryName, categoryEmoji) => {
         });
         console.log(newCategory)
         const savedCategory = await newCategory.save();
-        isSafe.data = savedCategory;
-        return isSafe;
+        return {
+            status: true,
+            data: savedCategory,
+            error: null
+        };        
     } catch (error) {
         throw error;
     }
 }
 
-const validateCategory = (categoryName, categoryEmoji) => {
-    if(typeof categoryName !== 'string' && categoryName.length() < 3) {
+const checkIfExists = async (categoryName, categoryEmoji, userId) => {
+    try {
+        isNameExists = await categoryModel.findByCategoryName(categoryName, userId, false);
+        if(isNameExists) {
+            return {
+                status : false,
+                data : null,
+                error : `Category with the name : ${categoryName} already exists`
+            };
+        }
+        isEmojiExists = await categoryModel.findByCategoryEmoji(categoryEmoji, userId, false);
+        if(isEmojiExists) {
+            return {
+                status : false,
+                data : null,
+                error : `Category with the Emoji : ${categoryEmoji} already exists`
+            };
+        }
+
         return {
-            status : false,
-            data : null,
-            error : 'Category name is invalid'
+            status : true,
+            data : 'safe to add',
+            error : null
         };
+    } catch (error) {
+        throw(error);
     }
-    const matches = categoryEmoji.match(emojiRegex);
-    if(!matches || matches.length !== 1 || matches[0] !== categoryEmoji) {
-        return {
-            status : false,
-            data : null,
-            error : 'Category emoji is invalid'
-        };
+}
+
+const validateCategory = (categoryName, categoryEmoji) => {
+    const categoryNameCheck = categoryNameValidate(categoryName);
+    if(!categoryNameCheck.status) {
+        return categoryNameCheck;
+    }
+    const categoryEmojiCheck = categoryEmojiValidate(categoryEmoji);
+    if(!categoryEmojiCheck.status) {
+        return categoryEmojiCheck;
     }
     return {
         status : true,

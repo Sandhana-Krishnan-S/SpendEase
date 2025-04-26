@@ -6,8 +6,7 @@
     - if it works for me then I will post it publically
 
 ## Todo list:
-    - Setup a redis for refresh token storage and revoke 
-    - set login limit for users bruting the accounts
-    - start working on actual logic of app now that login and register works
-
+    - edit and delete category
+    - start doing transaction `get , put , patch , delete` and pagination
+    - satrt frontend - design
     
