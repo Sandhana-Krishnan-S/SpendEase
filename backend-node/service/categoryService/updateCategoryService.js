@@ -1,6 +1,6 @@
 const categoryModel = require("../../model/categoryModel");
 
-const deleteCategoryService = async (userId, categoryId) => {
+const updateCategoryService = async (userId , categoryId , categoryName, categoryEmoji) => {
     try {
         const category = await categoryModel.findByIdWithUser(categoryId , userId);
         if(!category) {
@@ -8,9 +8,10 @@ const deleteCategoryService = async (userId, categoryId) => {
                 status : false,
                 data : null,
                 error : "Category not found"
-            }
+            };
         }
-        category.isDeleted = true;
+        category.categoryName = categoryName;
+        category.categoryEmoji = categoryEmoji;
         const updated = await category.save();
         return {
             status : true,
@@ -29,4 +30,4 @@ const deleteCategoryService = async (userId, categoryId) => {
     }
 }
 
-module.exports = deleteCategoryService;
+module.exports = updateCategoryService;
