@@ -30,7 +30,11 @@ categorySchema.statics.findByCategoryEmoji = function(categoryEmoji, userId, isD
 }
 
 categorySchema.statics.findByUserId = function(userId) {
-    return this.find({ userId });
+    return this.find({ userId , isDeleted : false});
+}
+
+categorySchema.statics.findByIdWithUser = function(_id , userId) {
+    return this.findOne({ _id , userId });
 }
 
 const categoryModel = mongoose.model('category' , categorySchema);
