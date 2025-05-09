@@ -1,4 +1,5 @@
 const categoryModel = require("../../model/categoryModel");
+const userModel = require("../../model/userModel");
 
 const deleteCategoryService = async (userId, categoryId) => {
     try {
@@ -12,6 +13,9 @@ const deleteCategoryService = async (userId, categoryId) => {
         }
         category.isDeleted = true;
         const updated = await category.save();
+        const user = await userModel.findById(userId);
+        user.categoryCount -=  1;
+        await user.updateOne({ categoryCount: user.categoryCount });
         return {
             status : true,
             data : updated,
