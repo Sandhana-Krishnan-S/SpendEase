@@ -8,7 +8,6 @@ const addTransactionService = async (userId , transaction) => {
             return categoryCheck;
         }
         transaction.user = userId;
-        console.log(transaction)
         const newTransaction = new transactionModel( transaction );
         const savedTransaction = await newTransaction.save();
         return {

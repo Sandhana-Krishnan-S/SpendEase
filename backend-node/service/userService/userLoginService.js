@@ -16,7 +16,6 @@ const login = async (email , password) => {
             };
         }
         const comparePassword = await user.compare(password);
-        console.log(comparePassword);
         if(!comparePassword) {
             return {
                 status : false,

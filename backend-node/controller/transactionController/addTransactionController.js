@@ -9,6 +9,7 @@ const addTransactionController = async (req , res , next) => {
                 data : null,
                 error : 'User is not autherised'
             });
+            return;
         }
         const userId = user._id;
         const transaction = req.body;
