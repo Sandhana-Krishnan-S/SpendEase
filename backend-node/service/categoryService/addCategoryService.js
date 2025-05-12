@@ -1,5 +1,6 @@
 const { categoryNameValidate, categoryEmojiValidate } = require("../../helper/categoryValidation");
 const categoryModel = require("../../model/categoryModel");
+const userModel = require("../../model/userModel");
 
 const addCategoryService = async (userId, categoryName, categoryEmoji) => {
     try {
@@ -16,7 +17,9 @@ const addCategoryService = async (userId, categoryName, categoryEmoji) => {
             categoryEmoji,
             userId
         });
-        console.log(newCategory)
+        const user = await userModel.findById(userId);
+        user.categoryCount +=  1;
+        await user.updateOne({ categoryCount: user.categoryCount });
         const savedCategory = await newCategory.save();
         return {
             status: true,

@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     isVerified : {
         type : Boolean,
         required : true
+    },
+    categoryCount : {
+        type : Number,
+        required : true,
+        default : 0
     }
 });
 
@@ -46,6 +51,10 @@ userSchema.methods.compare = async function (userPass) {
 
 userSchema.statics.findByEmail = function(email) {
     return this.findOne({ email });
+}
+
+userSchema.static.findById = function(_id) {
+    return this.findOne({ _id });
 }
 
 const userModel = mongoose.model('users' , userSchema);

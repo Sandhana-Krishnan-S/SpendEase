@@ -9,4 +9,10 @@
     - edit and delete category
     - start doing transaction `get , put , patch , delete` and pagination
     - satrt frontend - design
-    
+
+
+
+
+
+
+.

@@ -32,3 +32,6 @@ Thumbs.db
 # Compiled files  
 dist/  
 build/  
+
+#vscode-settings
+.vscode

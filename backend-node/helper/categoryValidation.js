@@ -1,3 +1,5 @@
+const categoryModel = require('../model/categoryModel');
+
 const emojiRegex = require('emoji-regex')();
 
 const categoryNameValidate = (categoryName) => {
@@ -31,7 +33,29 @@ const categoryEmojiValidate = (categoryEmoji) => {
     };
 }
 
+const validateTransactionCategory = async (categoryId , userId) => {
+    try {
+        const category = await categoryModel.findByIdWithUser(categoryId , userId);
+        if(!category || category.isDeleted) {
+            return {
+                status : false,
+                data : null,
+                error : "No such category found."
+            }
+        }        
+        return {
+            status: true,
+            data: category,
+            error: null
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 module.exports = {
     categoryNameValidate,
-    categoryEmojiValidate
+    categoryEmojiValidate,
+    validateTransactionCategory
 };

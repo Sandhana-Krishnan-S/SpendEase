@@ -11,6 +11,14 @@ const addCategoryController = async (req , res , next) => {
             });
             return;
         }
+        if(user.categoryCount == 25) {
+            res.status(400).json({
+                status : false,
+                data : null,
+                error : "category limit reached remove an existing one to add new."
+            });
+            return;
+        }
         const userId = user._id;
         const { categoryName, categoryEmoji } = req.body;
         const response = await addCategoryService(userId, categoryName, categoryEmoji);
