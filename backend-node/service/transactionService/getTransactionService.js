@@ -24,12 +24,14 @@ const getTransactionService = async (userId , page , size) => {
                 select: 'categoryName categoryEmoji isDeleted'
             });
         deleteCategory = " - (Deleted)"
-        
+        const delId = new Set();
         transactions.forEach(transaction => {
-            if (transaction.category?.isDeleted) {
-                transaction.category.categoryName += deleteCategory;
+            if (transaction.category?.isDeleted && !delId.has(transaction.category._id)) {
+                delId.add(transaction.category._id);
+                transaction.category.categoryName += deleteCategory
             }
         });
+
         return {
             status : true,
             data : {
