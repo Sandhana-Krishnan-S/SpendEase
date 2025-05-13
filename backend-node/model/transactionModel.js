@@ -39,6 +39,10 @@ const transactionSchema = mongoose.Schema({
     }
 });
 
+transactionSchema.statics.getById = function(_id) {
+    return this.findOne({ _id });
+} 
+
 const transactionModel = mongoose.model('transaction' , transactionSchema);
 
 module.exports = transactionModel;
