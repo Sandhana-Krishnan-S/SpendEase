@@ -1,3 +1,4 @@
+const essentialsHelper = require("../../helper/EssentialsHelper");
 const { generateNewJWT } = require("../../middlewares/tokenAuth");
 const registerService = require("../../service/userService/userRegisterService");
 
@@ -7,6 +8,8 @@ const register = async (req , res  , next) => {
         const response  = await registerService(userName , email , password);
         if(response.status) {
             const tokens = await generateNewJWT(response.data._id , response.data.email);
+            //adds default category
+            await essentialsHelper(response.data._id);
             res.status(200).json({
                 status : true,
                 data : {

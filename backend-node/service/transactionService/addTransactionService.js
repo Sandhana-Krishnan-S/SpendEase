@@ -8,7 +8,7 @@ const addTransactionService = async (userId , transaction) => {
             return categoryCheck;
         }
         transaction.user = userId;
-        const newTransaction = new transactionModel( transaction );
+        const newTransaction = new transactionModel(transaction);
         const savedTransaction = await newTransaction.save();
         return {
             status : true,

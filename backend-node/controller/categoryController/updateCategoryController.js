@@ -19,7 +19,7 @@ const updateCategoryController = async (req , res , next) => {
             res.status(400).json(response);
             return;
         }
-        res.status(201).json(response);
+        res.status(200).json(response);
         return;
     } catch (error) {
         next(error);
