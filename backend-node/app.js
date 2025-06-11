@@ -4,10 +4,11 @@ const bodyParser = require('body-parser');
 const { connectDB } = require('./connectDB');
 const mainRouter = require('./routers');
 const errorHandler = require('./middlewares/errorHandler');
+const cors = require('cors');
 
 const app = express();
-
 app.use(bodyParser.json());
+app.use(cors());
 
 //connect to DB --- with ananomus auto calling function
 (() => {
